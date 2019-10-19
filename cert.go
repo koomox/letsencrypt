@@ -112,7 +112,10 @@ T4OU/RX7VbZvL5DB/L/gW0XoYwO4SKg=
 )
 
 func loadCertPool(certsPem ...[]byte) (pool *x509.CertPool) {
-	pool = x509.NewCertPool()
+	pool, err := x509.SystemCertPool()
+	if err != nil {
+		pool = x509.NewCertPool()
+	}
 	for _, pem := range certsPem {
 		pool.AppendCertsFromPEM(pem)
 	}
@@ -135,7 +138,7 @@ func GetDir() string {
 func TLSConfig() (tlsCfg *tls.Config) {
 	tlsCfg = &tls.Config{}
 	tlsCfg.MinVersion = tls.VersionTLS12
-	tlsCfg.RootCAs = loadCertPool(rootCApem, subCApem, kCApem, mCApem)
+	tlsCfg.RootCAs = loadCertPool([]byte(cloudflareRootCA), rootCApem, subCApem, kCApem, mCApem)
 
 	return
 }
