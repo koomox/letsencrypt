@@ -8,6 +8,58 @@ import (
 )
 
 var (
+	// https://letsencrypt.org/certs/trustid-x3-root.pem.txt
+	trustidX3RootCa = []byte(`-----BEGIN CERTIFICATE-----
+MIIDSjCCAjKgAwIBAgIQRK+wgNajJ7qJMDmGLvhAazANBgkqhkiG9w0BAQUFADA/
+MSQwIgYDVQQKExtEaWdpdGFsIFNpZ25hdHVyZSBUcnVzdCBDby4xFzAVBgNVBAMT
+DkRTVCBSb290IENBIFgzMB4XDTAwMDkzMDIxMTIxOVoXDTIxMDkzMDE0MDExNVow
+PzEkMCIGA1UEChMbRGlnaXRhbCBTaWduYXR1cmUgVHJ1c3QgQ28uMRcwFQYDVQQD
+Ew5EU1QgUm9vdCBDQSBYMzCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEB
+AN+v6ZdQCINXtMxiZfaQguzH0yxrMMpb7NnDfcdAwRgUi+DoM3ZJKuM/IUmTrE4O
+rz5Iy2Xu/NMhD2XSKtkyj4zl93ewEnu1lcCJo6m67XMuegwGMoOifooUMM0RoOEq
+OLl5CjH9UL2AZd+3UWODyOKIYepLYYHsUmu5ouJLGiifSKOeDNoJjj4XLh7dIN9b
+xiqKqy69cK3FCxolkHRyxXtqqzTWMIn/5WgTe1QLyNau7Fqckh49ZLOMxt+/yUFw
+7BZy1SbsOFU5Q9D8/RhcQPGX69Wam40dutolucbY38EVAjqr2m7xPi71XAicPNaD
+aeQQmxkqtilX4+U9m5/wAl0CAwEAAaNCMEAwDwYDVR0TAQH/BAUwAwEB/zAOBgNV
+HQ8BAf8EBAMCAQYwHQYDVR0OBBYEFMSnsaR7LHH62+FLkHX/xBVghYkQMA0GCSqG
+SIb3DQEBBQUAA4IBAQCjGiybFwBcqR7uKGY3Or+Dxz9LwwmglSBd49lZRNI+DT69
+ikugdB/OEIKcdBodfpga3csTS7MgROSR6cz8faXbauX+5v3gTt23ADq1cEmv8uXr
+AvHRAosZy5Q6XkjEGB5YGV8eAlrwDPGxrancWYaLbumR9YbK+rlmM6pZW87ipxZz
+R8srzJmwN0jP41ZL9c8PDHIyh8bwRLtTcm1D9SZImlJnt1ir/md2cXjbDaJWFBM5
+JDGFoqgCWjBH4d1QB7wCCZAA62RjYJsWvIjJEubSfZGL+T0yjWW06XyxV3bqxbYo
+Ob8VZRzI9neWagqNdwvYkQsEjgfbKbYK7p2CNTUQ
+-----END CERTIFICATE-----`)
+
+	// https://letsencrypt.org/certs/isrg-root-ocsp-x1.pem.txt
+	isrgRootOcspX1Ca = []byte(`-----BEGIN CERTIFICATE-----
+MIIEtjCCAp6gAwIBAgIRAOSLLZlzkiCW3s5KSK7GfFEwDQYJKoZIhvcNAQELBQAw
+TzELMAkGA1UEBhMCVVMxKTAnBgNVBAoTIEludGVybmV0IFNlY3VyaXR5IFJlc2Vh
+cmNoIEdyb3VwMRUwEwYDVQQDEwxJU1JHIFJvb3QgWDEwHhcNMTUwNjA0MTIwMDQw
+WhcNMjAwNjA0MTIwMDQwWjBUMQswCQYDVQQGEwJVUzEpMCcGA1UEChMgSW50ZXJu
+ZXQgU2VjdXJpdHkgUmVzZWFyY2ggR3JvdXAxGjAYBgNVBAMTEUlTUkcgUm9vdCBP
+Q1NQIFgxMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuw0cR9Li4+M+
+aIJixENnV4PM9N8nAxwWsM/7PzV/766q/1PKA8jB4OykscNkK9XCblOElSzXSQJx
+BrpckIquoydslakPvaB4HLj3cx8EJP4tEyXRDt415uZs9LWFSoplSLBFNC2gMfL7
+WYxPqcoOagU+amCVSEDK85oILqnZ27FJrU2hQGOF/lWDa1y1YiIp9e2+ryFOUn1w
+AVWQdnOyovh6suBnjCcR+269q6Xtf3/fUHjqnOgO7e8XMDy69MygLltOzDxI0/VA
+21EL1kBoC2ckgorVASrKByaPS9o6p2bYcHZ3FC/3g+tv6pCiFZt+e4YMBnYVyAYC
+miJVv7PFtQIDAQABo4GHMIGEMA4GA1UdDwEB/wQEAwIHgDAMBgNVHRMBAf8EAjAA
+MB0GA1UdDgQWBBQfuyfyJnprzPH1dNmWK34Z7MMcIzATBgNVHSUEDDAKBggrBgEF
+BQcDCTAfBgNVHSMEGDAWgBR5tFnme7bl5AFzgAiIyBpY9umbbjAPBgkrBgEFBQcw
+AQUEAgUAMA0GCSqGSIb3DQEBCwUAA4ICAQB6baTUbmQI6I2/BPB2gDsxRMSeppGM
+g5lcDQE4aP7oPDcRq+S+6LuuwVjj67UZfJqczCgcJRcG/6kMjBq7jcg6DmhVP8V6
+9f47vri57ikQLQge4yibUkMpmaT+IaUKklSQhA2ZAsFRd638DW+wNlkp8FpORz0K
+1BymHOYq6xpRyEW5piZhi7ZCrR4x1k7uGChpYP+X79xmht4FUpJRbVuHtnjjZTGH
+BIrZj+n2iIPTrjBn5fpfmOb+ABlV9ovvxUYql6cpQmvYzelvoA7tZ0EJf0nwF+FS
+orbSX1CiTLXGnvoGun84UXOLY2Thgf8SVGESaeR9cQJBHi8w1ksK++36SECauTNP
+hcegMGEdxlHPc3yrP3EcC+rqNdLRWCNkSnnLXFxWlk9JJayzOuF/HDObtJB54AEp
+M7ly58PdQD1MGQ4GBFTsXN28sqfzpwl/RQGmeHz7EVPb5hHoW8z+CwUtbTrNhYNc
+FMnjGFnZCHsbTjuOMGN4koyZtpRnhpHs0LgmsYeofiECtbKUvSL1DB1DTkjitM7s
+qjFfubGSKwAGJZFLi0EwLzUe+DZvYagZBT/Upp/Ush9ImwzKZirqVfA6/qgFOLST
+NdCsat0uo+FX1klsPm6enps9WCOFpkIppbf6WAUv+myiDOY2jh6GpVsc07qDVZFG
+89JKdHDn7q5TsQ==
+-----END CERTIFICATE-----`)
+
 	// PEM files for root certificates of LetsEncrypt Intermediary and Root.
 	letsEncryptRootCa = []byte(`-----BEGIN CERTIFICATE-----
 MIIFWTCCBEGgAwIBAgISA/Z7bJ3ixxPzaQQViOppy4WFMA0GCSqGSIb3DQEBCwUA
@@ -131,7 +183,7 @@ func loadCertPool(certsPem ...[]byte) (pool *x509.CertPool) {
 }
 
 func CertPool() *x509.CertPool {
-	return loadCertPool(letsEncryptRootCa, letsEncryptIntermediaryCa, kCApem, mCApem)
+	return loadCertPool(trustidX3RootCa, isrgRootOcspX1Ca, letsEncryptIntermediaryCa, kCApem, mCApem)
 }
 
 func GetDir() string {
@@ -145,7 +197,7 @@ func GetDir() string {
 func TLSConfig() (tlsCfg *tls.Config) {
 	tlsCfg = &tls.Config{}
 	tlsCfg.MinVersion = tls.VersionTLS12
-	tlsCfg.RootCAs = loadCertPool(letsEncryptRootCa, letsEncryptIntermediaryCa, kCApem, mCApem)
+	tlsCfg.RootCAs = loadCertPool(trustidX3RootCa, isrgRootOcspX1Ca, letsEncryptIntermediaryCa, kCApem, mCApem)
 
 	return
 }
