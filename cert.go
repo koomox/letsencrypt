@@ -8,7 +8,8 @@ import (
 )
 
 var (
-	rootCApem = []byte(`-----BEGIN CERTIFICATE-----
+	// PEM files for root certificates of LetsEncrypt Intermediary and Root.
+	letsEncryptRootCa = []byte(`-----BEGIN CERTIFICATE-----
 MIIFWTCCBEGgAwIBAgISA/Z7bJ3ixxPzaQQViOppy4WFMA0GCSqGSIb3DQEBCwUA
 MEoxCzAJBgNVBAYTAlVTMRYwFAYDVQQKEw1MZXQncyBFbmNyeXB0MSMwIQYDVQQD
 ExpMZXQncyBFbmNyeXB0IEF1dGhvcml0eSBYMzAeFw0xOTEwMTAxOTU2MzBaFw0y
@@ -40,7 +41,7 @@ R+JRZzUTW0/46JMgH4/Ex78jJAhd49MPq4KFQBv6kPQDGLwvksHJdGRTsjbGp/QN
 d/3k8hwIA4RXROw3hCS2tyq7m+04y0qj4WQ1MMI=
 -----END CERTIFICATE-----`)
 
-	subCApem = []byte(`-----BEGIN CERTIFICATE-----
+	letsEncryptIntermediaryCa = []byte(`-----BEGIN CERTIFICATE-----
 MIIEkjCCA3qgAwIBAgIQCgFBQgAAAVOFc2oLheynCDANBgkqhkiG9w0BAQsFADA/
 MSQwIgYDVQQKExtEaWdpdGFsIFNpZ25hdHVyZSBUcnVzdCBDby4xFzAVBgNVBAMT
 DkRTVCBSb290IENBIFgzMB4XDTE2MDMxNzE2NDA0NloXDTIxMDMxNzE2NDA0Nlow
@@ -130,7 +131,7 @@ func loadCertPool(certsPem ...[]byte) (pool *x509.CertPool) {
 }
 
 func CertPool() *x509.CertPool {
-	return loadCertPool(rootCApem, subCApem, kCApem, mCApem)
+	return loadCertPool(letsEncryptRootCa, letsEncryptIntermediaryCa, kCApem, mCApem)
 }
 
 func GetDir() string {
@@ -144,7 +145,7 @@ func GetDir() string {
 func TLSConfig() (tlsCfg *tls.Config) {
 	tlsCfg = &tls.Config{}
 	tlsCfg.MinVersion = tls.VersionTLS12
-	tlsCfg.RootCAs = loadCertPool(rootCApem, subCApem, kCApem, mCApem)
+	tlsCfg.RootCAs = loadCertPool(letsEncryptRootCa, letsEncryptIntermediaryCa, kCApem, mCApem)
 
 	return
 }
