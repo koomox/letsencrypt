@@ -204,7 +204,7 @@ func loadCertPool(certsPem ...[]byte) (pool *x509.CertPool) {
 }
 
 func CertPool() *x509.CertPool {
-	return loadCertPool(trustidX3RootCa, isrgRootOcspX1Ca, letsEncryptIntermediaryCa)
+	return loadCertPool(isrgRootX1Ca, letsEncryptX3CrossSigned, letsEncryptAuthorityX3Ca, letsEncryptX4CrossSignedCa, letsEncryptAuthorityX4Ca, trustidX3RootCa)
 }
 
 func GetDir() string {
@@ -218,7 +218,7 @@ func GetDir() string {
 func TLSConfig() (tlsCfg *tls.Config) {
 	tlsCfg = &tls.Config{}
 	tlsCfg.MinVersion = tls.VersionTLS12
-	tlsCfg.RootCAs = loadCertPool(trustidX3RootCa, isrgRootOcspX1Ca, letsEncryptIntermediaryCa)
+	tlsCfg.RootCAs = loadCertPool(isrgRootX1Ca, letsEncryptX3CrossSigned, letsEncryptAuthorityX3Ca, letsEncryptX4CrossSignedCa, letsEncryptAuthorityX4Ca, trustidX3RootCa)
 
 	return
 }
