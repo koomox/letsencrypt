@@ -83,7 +83,7 @@ S2McTZbbVSMKnQ+BdaDmQPVkRgNuzvpqfQbspDQGdNpT2Lm4xiN9qfgqLaSCpi4t
 EcrmzTFYeYXmchynn9NM0GbQp7s=
 -----END CERTIFICATE-----`)
 	// https://letsencrypt.org/certs/lets-encrypt-r3.pem
-	isrgRootR3Ca = []byte(`-----BEGIN CERTIFICATE-----
+	letsEncryptR3Ca = []byte(`-----BEGIN CERTIFICATE-----
 MIIFFjCCAv6gAwIBAgIRAJErCErPDBinU/bWLiWnX1owDQYJKoZIhvcNAQELBQAw
 TzELMAkGA1UEBhMCVVMxKTAnBgNVBAoTIEludGVybmV0IFNlY3VyaXR5IFJlc2Vh
 cmNoIEdyb3VwMRUwEwYDVQQDEwxJU1JHIFJvb3QgWDEwHhcNMjAwOTA0MDAwMDAw
@@ -114,7 +114,7 @@ MldlTTKB3zhThV1+XWYp6rjd5JW1zbVWEkLNxE7GJThEUG3szgBVGP7pSWTUTsqX
 nLRbwHOoq7hHwg==
 -----END CERTIFICATE-----`)
 	// https://letsencrypt.org/certs/lets-encrypt-r3-cross-signed.txt
-	isrgRootR3CrossSigned = []byte(`-----BEGIN CERTIFICATE-----
+	letsEncryptR3CrossSigned = []byte(`-----BEGIN CERTIFICATE-----
 MIIEZTCCA02gAwIBAgIQQAF1BIMUpMghjISpDBbN3zANBgkqhkiG9w0BAQsFADA/
 MSQwIgYDVQQKExtEaWdpdGFsIFNpZ25hdHVyZSBUcnVzdCBDby4xFzAVBgNVBAMT
 DkRTVCBSb290IENBIFgzMB4XDTIwMTAwNzE5MjE0MFoXDTIxMDkyOTE5MjE0MFow
@@ -141,7 +141,7 @@ O5b85o3AM/OJ+CktFBQtfvBhcJVd9wvlwPsk+uyOy2HI7mNxKKgsBTt375teA2Tw
 UdHkhVNcsAKX1H7GNNLOEADksd86wuoXvg==
 -----END CERTIFICATE-----`)
 	// https://letsencrypt.org/certs/lets-encrypt-e1.txt
-	isrgRootE1Ca = []byte(`-----BEGIN CERTIFICATE-----
+	letsEncryptE1Ca = []byte(`-----BEGIN CERTIFICATE-----
 MIICxjCCAk2gAwIBAgIRALO93/inhFu86QOgQTWzSkUwCgYIKoZIzj0EAwMwTzEL
 MAkGA1UEBhMCVVMxKTAnBgNVBAoTIEludGVybmV0IFNlY3VyaXR5IFJlc2VhcmNo
 IEdyb3VwMRUwEwYDVQQDEwxJU1JHIFJvb3QgWDIwHhcNMjAwOTA0MDAwMDAwWhcN
@@ -159,7 +159,7 @@ Dbo/AwCd89eYhNlXLr3pD5xcSAQh8suzYHKOl9YST8pE9kLJ03uGqQIwWrGxtO3q
 YJkgsTgDyj2gJrjubi1K9sZmHzOa25JK1fUpE8ZwYii6I4zPPS/Lgul/
 -----END CERTIFICATE-----`)
 	// https://letsencrypt.org/certs/lets-encrypt-r4.txt
-	isrgRootR4Ca = []byte(`-----BEGIN CERTIFICATE-----
+	letsEncryptR4Ca = []byte(`-----BEGIN CERTIFICATE-----
 MIIFFjCCAv6gAwIBAgIRAIp5IlCr5SxSbO7Pf8lC3WIwDQYJKoZIhvcNAQELBQAw
 TzELMAkGA1UEBhMCVVMxKTAnBgNVBAoTIEludGVybmV0IFNlY3VyaXR5IFJlc2Vh
 cmNoIEdyb3VwMRUwEwYDVQQDEwxJU1JHIFJvb3QgWDEwHhcNMjAwOTA0MDAwMDAw
@@ -190,7 +190,7 @@ CxGiCPQqVxPgfNSh+2CPd2Xv04lNeuw6gG89DlOhHuoFKRlmPnom+gwqhz3ZXMfz
 TfmvjrBokzCICA==
 -----END CERTIFICATE-----`)
 	// https://letsencrypt.org/certs/lets-encrypt-r4-cross-signed.txt
-	isrgRootR4CrossSigned = []byte(`-----BEGIN CERTIFICATE-----
+	letsEncryptR4CrossSigned = []byte(`-----BEGIN CERTIFICATE-----
 MIIEZTCCA02gAwIBAgIQQAF1BIMlO+Rkt3exI9CKgjANBgkqhkiG9w0BAQsFADA/
 MSQwIgYDVQQKExtEaWdpdGFsIFNpZ25hdHVyZSBUcnVzdCBDby4xFzAVBgNVBAMT
 DkRTVCBSb290IENBIFgzMB4XDTIwMTAwNzE5MjE0NVoXDTIxMDkyOTE5MjE0NVow
@@ -217,7 +217,7 @@ B8KsVwdeNrERPL+LjhhLde1Et0aL9nlv4CqwXHML2LPgk38j/WllbQ/8HRd2VpB+
 JW6Z8JNhcnuBwATHMCeJVCFapoZsPfQQ6Q==
 -----END CERTIFICATE-----`)
 	// https://letsencrypt.org/certs/lets-encrypt-e2.txt
-	isrgRootE2Ca = []byte(`-----BEGIN CERTIFICATE-----
+	letsEncryptE2Ca = []byte(`-----BEGIN CERTIFICATE-----
 MIICxjCCAkygAwIBAgIQTtI99q9+x/mwxHJv+VEqdzAKBggqhkjOPQQDAzBPMQsw
 CQYDVQQGEwJVUzEpMCcGA1UEChMgSW50ZXJuZXQgU2VjdXJpdHkgUmVzZWFyY2gg
 R3JvdXAxFTATBgNVBAMTDElTUkcgUm9vdCBYMjAeFw0yMDA5MDQwMDAwMDBaFw0y
@@ -398,7 +398,7 @@ func loadCertPool(certsPem ...[]byte) (pool *x509.CertPool) {
 }
 
 func CertPool() *x509.CertPool {
-	return loadCertPool(isrgRootX1Ca, letsEncryptX3CrossSigned, letsEncryptAuthorityX3Ca, letsEncryptX4CrossSignedCa, letsEncryptAuthorityX4Ca, trustidX3RootCa)
+	return loadCertPool(isrgRootX1Ca, isrgRootX2Ca, isrgRootX2CrossSigned, letsEncryptR3Ca, letsEncryptR3CrossSigned, letsEncryptE1Ca, letsEncryptR4Ca, letsEncryptR4CrossSigned, letsEncryptE2Ca, letsEncryptX3CrossSigned, letsEncryptAuthorityX3Ca, letsEncryptX4CrossSignedCa, letsEncryptAuthorityX4Ca, trustidX3RootCa)
 }
 
 func GetDir() string {
@@ -412,7 +412,7 @@ func GetDir() string {
 func TLSConfig() (tlsCfg *tls.Config) {
 	tlsCfg = &tls.Config{}
 	tlsCfg.MinVersion = tls.VersionTLS12
-	tlsCfg.RootCAs = loadCertPool(isrgRootX1Ca, letsEncryptX3CrossSigned, letsEncryptAuthorityX3Ca, letsEncryptX4CrossSignedCa, letsEncryptAuthorityX4Ca, trustidX3RootCa)
+	tlsCfg.RootCAs = loadCertPool(isrgRootX1Ca, isrgRootX2Ca, isrgRootX2CrossSigned, letsEncryptR3Ca, letsEncryptR3CrossSigned, letsEncryptE1Ca, letsEncryptR4Ca, letsEncryptR4CrossSigned, letsEncryptE2Ca, letsEncryptX3CrossSigned, letsEncryptAuthorityX3Ca, letsEncryptX4CrossSignedCa, letsEncryptAuthorityX4Ca, trustidX3RootCa)
 
 	return
 }
