@@ -1,3 +1,3 @@
-module github.com/koomoxs/letsencrypt
+module github.com/koomox/letsencrypt
 
 go 1.16
