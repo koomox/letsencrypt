@@ -1,0 +1,64 @@
+package main
+
+import (
+	"fmt"
+	"io"
+	"net/http"
+	"os"
+	"regexp"
+	"strings"
+	"time"
+)
+
+func GetWithDialer(resource string, dialer *http.Client) ([]byte, error) {
+	req, err := http.NewRequest(http.MethodGet, resource, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header.Set("User-Agent", "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:132.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36")
+	resp, err := dialer.Do(req)
+	if err != nil {
+		return nil, err
+	}
+
+	defer resp.Body.Close()
+	if resp.StatusCode != http.StatusOK {
+		return nil, fmt.Errorf("request %s, status %s", resource, resp.Status)
+	}
+
+	return io.ReadAll(resp.Body)
+}
+
+func main() {
+	dialer := &http.Client{Timeout: 5 * time.Second}
+	b, err := GetWithDialer("https://letsencrypt.org/certificates/", dialer)
+	if err != nil {
+		fmt.Printf("%s\n", err.Error())
+		return
+	}
+	var certificates []string
+	buf := "package letsencrypt\n\nvar (\n"
+	exp := regexp.MustCompile(`/[a-zA-Z0-9/-]+?(\.pem|\.pem\.txt)`)
+	res := exp.FindAllString(string(b), -1)
+	for i := range res {
+		resource := fmt.Sprintf("https://letsencrypt.org%s", res[i])
+		fmt.Printf("%d: %s\n", i, resource)
+		b, err = GetWithDialer(resource, dialer)
+		if err != nil {
+			fmt.Printf("%s\n", err.Error())
+			return
+		}
+		name := strings.Split(res[i], "/")
+		fname := name[len(name)-1]
+		fname = strings.ReplaceAll(fname, "-", "")
+		fname = strings.ReplaceAll(fname, "_", "")
+		fname = strings.ReplaceAll(fname, ".pem", "")
+		fname = strings.ReplaceAll(fname, ".txt", "")
+		buf += fmt.Sprintf("\t// %s\n", resource)
+		buf += fmt.Sprintf("\t%s = []byte(`%s`)\n", fname, string(b[:len(b)-1]))
+		certificates = append(certificates, fname)
+	}
+	buf += fmt.Sprintf(")\nvar certificates = [][]byte{%s}\n", strings.Join(certificates, ", "))
+
+	os.WriteFile("certificates.go", []byte(buf), os.ModePerm)
+}
