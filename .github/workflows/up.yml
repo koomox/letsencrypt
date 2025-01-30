@@ -44,7 +44,7 @@ jobs:
           go mod init letsencrypt
           go run main.go
           sudo rm -rf main.go
-          sudo sha256sum ./certificates.go > ./certificates.sha256sum.txt
+          sudo sha256sum ./certificates.go
 
       - name: Prepare artifact
         run: |
