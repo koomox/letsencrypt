@@ -42,6 +42,7 @@ jobs:
           cd ${{ env.TARGET }}
           sudo cp -f $GITHUB_WORKSPACE/example/example.txt main.go
           go mod init letsencrypt
+          go mod tidy
           go run main.go
           sudo rm -rf main.go
           sudo sha256sum ./certificates.go
